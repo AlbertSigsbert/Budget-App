@@ -1,29 +1,37 @@
+export const wait = () => {
+  return new Promise((res) => setTimeout(res, Math.random() * 2000));
+};
+
+//colors
 const generateRandomColor = () => {
   const existingBudgetLength = fetchData("budgets")?.length ?? 0;
-  return `${existingBudgetLength * 34} 65% 50%`
-}
+  return `${existingBudgetLength * 34} 65% 50%`;
+};
 
 //Local Storage
 export const fetchData = (key) => {
-    return JSON.parse(localStorage.getItem(key))
-}
+  return JSON.parse(localStorage.getItem(key));
+};
 
 //create budget
-export const createBudget = ({name, amount}) =>{
+export const createBudget = ({ name, amount }) => {
   const newItem = {
-    id:crypto.randomUUID(),
-    name:name,
-    amount:+amount,
-    createdAt:Date.now(),
-    color:generateRandomColor()
-  }
+    id: crypto.randomUUID(),
+    name: name,
+    amount: +amount,
+    createdAt: Date.now(),
+    color: generateRandomColor(),
+  };
 
   const existingBudget = fetchData("budgets") ?? [];
 
-  return localStorage.setItem("budgets", JSON.stringify([...existingBudget, newItem]));
-}
+  return localStorage.setItem(
+    "budgets",
+    JSON.stringify([...existingBudget, newItem])
+  );
+};
 
-//delete item 
-export const deleteItem = ({key}) => {
-    return localStorage.removeItem(key);
-}
+//delete item
+export const deleteItem = ({ key }) => {
+  return localStorage.removeItem(key);
+};
