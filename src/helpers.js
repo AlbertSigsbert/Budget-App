@@ -32,13 +32,13 @@ export const createBudget = ({ name, amount }) => {
 };
 
 //create expenses
-export const createExpense = ({ name, amount,budgetId }) => {
+export const createExpense = ({ name, amount, budgetId }) => {
   const newItem = {
     id: crypto.randomUUID(),
     name: name,
     amount: +amount,
     createdAt: Date.now(),
-    budgetId:budgetId
+    budgetId: budgetId,
   };
 
   const existingExpense = fetchData("expenses") ?? [];
@@ -52,4 +52,35 @@ export const createExpense = ({ name, amount,budgetId }) => {
 //delete item
 export const deleteItem = ({ key }) => {
   return localStorage.removeItem(key);
+};
+
+//total spent by budget
+
+export const calculateSpentByBudget = (budgetId) => {
+  const expenses = fetchData("expenses") ?? [];
+
+  const budgetSpent = expenses.reduce((acc, expense) => {
+    if (expense.budgetId !== budgetId) return acc;
+    return (acc += expense.amount);
+  }, 0);
+
+  return budgetSpent;
+};
+
+//FORMATTING
+
+//Format percentages
+export const formatPercentage = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "percent",
+    minimumFractionDigits: 0,
+  });
+};
+
+//Format currency
+export const formatCurrency = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+  });
 };
