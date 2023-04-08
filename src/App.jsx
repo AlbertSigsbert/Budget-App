@@ -13,10 +13,12 @@ import Main, { mainLoader } from "./layouts/Main";
 //Pages
 import Dashboard, { dashboardAction, dashboardLoader } from "./pages/Dashboard";
 import ExpensesPage, { expensesAction, expensesLoader } from "./pages/ExpensesPage";
+import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
 import Error from "./pages/Error";
 
 //Actions
 import { logoutAction } from "./actions/logout";
+
 
 
 const router = createBrowserRouter([
@@ -34,10 +36,18 @@ const router = createBrowserRouter([
         errorElement:<Error/>
       },
       {
+        path:"budget/:id",
+        element: <BudgetPage/>,
+        loader: budgetLoader,
+        action:budgetAction,
+        errorElement:<Error/>
+      },
+      {
         path:"expenses",
         element: <ExpensesPage />,
         loader:expensesLoader ,
-        action:expensesAction
+        action:expensesAction,
+        errorElement:<Error/>
       },
       {
         path:"logout",
